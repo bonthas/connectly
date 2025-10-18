@@ -1,0 +1,24 @@
+.create-post {
+  background: white;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.post-form textarea {
+  width: 100%;
+  border: none;
+  resize: none;
+  font-size: 16px;
+  font-family: inherit;
+  margin-bottom: 12px;
+}
+
+.post-form textarea:focus {
+  outline: none;
+}
+
+.post-actions {
+  display: flex;
+  justify-content: flex-end;
+}

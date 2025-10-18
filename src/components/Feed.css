@@ -1,0 +1,15 @@
+.feed-container {
+  padding: 20px 0;
+}
+
+.feed {
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.posts {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
