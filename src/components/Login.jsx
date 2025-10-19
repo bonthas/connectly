@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import './Login.css'
 
 const Login = ({ setUser }) => {
@@ -8,13 +8,26 @@ const Login = ({ setUser }) => {
     firstName: '',
     lastName: ''
   })
+  const [profileImage, setProfileImage] = useState(null)
   const [isSignUp, setIsSignUp] = useState(false)
+  const fileInputRef = useRef(null)
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     })
+  }
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setProfileImage(event.target.result);
+      };
+      reader.readAsDataURL(file);
+    }
   }
 
   const handleSubmit = (e) => {
@@ -24,9 +37,14 @@ const Login = ({ setUser }) => {
       id: 1,
       firstName: isSignUp ? formData.firstName : 'John',
       lastName: isSignUp ? formData.lastName : 'Doe',
-      email: formData.email
+      email: formData.email,
+      profileImage: profileImage || null
     }
     setUser(user)
+  }
+
+  const triggerFileInput = () => {
+    fileInputRef.current?.click();
   }
 
   return (
@@ -34,6 +52,28 @@ const Login = ({ setUser }) => {
       <div className="login-card">
         <h2>{isSignUp ? 'Create Account' : 'Log in to Connectly'}</h2>
         <p className="subtitle">Connect with friends and the world around you.</p>
+        
+        {isSignUp && (
+          <div className="profile-image-upload">
+            <div className="image-preview" onClick={triggerFileInput}>
+              {profileImage ? (
+                <img src={profileImage} alt="Profile preview" />
+              ) : (
+                <div className="upload-placeholder">
+                  <span>📷</span>
+                  <p>Add Profile Photo</p>
+                </div>
+              )}
+            </div>
+            <input
+              type="file"
+              ref={fileInputRef}
+              onChange={handleImageUpload}
+              accept="image/*"
+              style={{ display: 'none' }}
+            />
+          </div>
+        )}
         
         <form onSubmit={handleSubmit} className="login-form">
           {isSignUp && (

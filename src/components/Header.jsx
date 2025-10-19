@@ -4,8 +4,16 @@ import './Header.css'
 
 const Header = ({ user, setUser }) => {
   const handleLogout = () => {
-    setUser(null)
-  }
+    setUser(null);
+    localStorage.removeItem('connectlyUser');
+  };
+
+  const getProfileImage = () => {
+    if (user?.profileImage) {
+      return <img src={user.profileImage} alt="Profile" className="profile-image-small" />;
+    }
+    return <div className="default-avatar">👤</div>;
+  };
 
   return (
     <header className="header">
@@ -19,7 +27,10 @@ const Header = ({ user, setUser }) => {
             {user ? (
               <>
                 <Link to="/" className="nav-link">Home</Link>
-                <Link to="/profile" className="nav-link">Profile</Link>
+                <Link to="/profile" className="nav-link profile-link">
+                  {getProfileImage()}
+                  <span>Profile</span>
+                </Link>
                 <button onClick={handleLogout} className="btn btn-secondary">
                   Logout
                 </button>

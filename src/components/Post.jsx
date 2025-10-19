@@ -10,11 +10,18 @@ const Post = ({ post }) => {
     setIsLiked(!isLiked)
   }
 
+  const getUserAvatar = () => {
+    if (post.user.profileImage) {
+      return <img src={post.user.profileImage} alt={post.user.name} className="user-avatar" />;
+    }
+    return <div className="user-avatar-default">{post.user.avatar}</div>;
+  }
+
   return (
     <div className="post">
       <div className="post-header">
         <div className="user-info">
-          <span className="avatar">{post.user.avatar}</span>
+          {getUserAvatar()}
           <div>
             <h4>{post.user.name}</h4>
             <span className="timestamp">{post.timestamp}</span>
